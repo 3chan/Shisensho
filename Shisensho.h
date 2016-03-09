@@ -15,6 +15,8 @@ extern ImageData g_clearImage;
 extern ImageData g_charImages[ALPHABET];
 extern ImageData g_pieceImages[PIECE_SIZE * PIECE_SIZE / 4];
 
+extern int g_distance[FRAME_SIZE * FRAME_SIZE];
+
 enum Intend {
   START,
   PLAY,
@@ -37,6 +39,6 @@ void GetResources(void);
 
 
 /* Shisehsno.c 内 */
-void SetPieceData(int type, int state, ImageData *img_Data, PieceData *p_Data);
+void InitPieceData(int type, int state, ImageData *img_Data, PieceData *p_Data);
 
 #endif

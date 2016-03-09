@@ -33,6 +33,10 @@ ImageData g_charImages[ALPHABET];
 ImageData g_pieceImages[PIECE_SIZE * PIECE_SIZE /4];
 PieceData g_pieceData[PIECE_SIZE * PIECE_SIZE];
 
+int g_distance[FRAME_SIZE * FRAME_SIZE];
+
+enum Intend intend;
+
 
 
 /* リソース読み込み */
@@ -77,11 +81,14 @@ void init(void) {
     FlipImageData(&g_Image); /* 画像の上下を反転する */
   }
 
+  
   for (i=0; i < PIECE_SIZE * PIECE_SIZE / 4; i++) {
     for (j=0; j<4; j++) {
-      SetPieceData(i, 0, &g_pieceImages[i], &(g_pieceData[4 * i + j]));
+      InitPieceData(i, 0, &g_pieceImages[i], &(g_pieceData[4 * i + j]));
     }
   }
+
+  
   
   StartTimer();	/* 時間計測の開始 */
 }
@@ -158,7 +165,7 @@ void keyboard(unsigned char key, int x, int y) {
       StartTimer();
       intend = PLAY;
     }
-    else if (key = '\33') exit(0);
+    else if (key == '\33') exit(0);
     break;
     
   case PLAY:
