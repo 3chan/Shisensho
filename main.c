@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 #include <GL/glut.h>
 
 #include "ImageData.h"
@@ -22,7 +23,7 @@ int g_ImagePosY = 0;	/* 画像の左下点の、初期 y 座標 */
 int g_ImageVelocityX = -3;	/* 座標更新時の、x 方向の移動距離 */
 int g_ImageVelocityY = 2;	/* 座標更新時の、y 方向の移動距離 */
 int g_AnimationDulation = 10;/* 何ミリ秒ごとに更新するかの刻み幅 */
-                                                                            
+
 double g_PrevTime = 0.0;
 
 
@@ -65,7 +66,7 @@ void GetResources(void) {
     InitImageData(&g_charImages[i]);
     sprintf(filename, "res/char/ch%03d.ppm", ASCII + i);
     if (LoadPPMImage(filename, &g_charImages[i])) FlipImageData(&g_charImages[i]);
-  }  
+  }
 }
 
 
@@ -75,21 +76,25 @@ void init(void) {
   printf("\n== Init ==\n");
   int i = 0, j = 0;
   glClearColor(1.0, 1.0, 1.0, 1.0);   /* ウィンドウを消去するときの色を設定 */
-  
-  InitImageData(&g_Image);	/* 画像データを初期化 */	
+
+  InitImageData(&g_Image);	/* 画像データを初期化 */
   if ( LoadPPMImage(IMAGE_FILE, &g_Image) ) {  /* 画像データの読み込みに成功 */
     FlipImageData(&g_Image); /* 画像の上下を反転する */
   }
 
-  
+  /* コマ 1 種につき 4 つ分のデータを作る */
   for (i=0; i < PIECE_SIZE * PIECE_SIZE / 4; i++) {
     for (j=0; j<4; j++) {
-      InitPieceData(i, 0, &g_pieceImages[i], &(g_pieceData[4 * i + j]));
+      InitPieceData(i, 1, &g_pieceImages[i], &(g_pieceData[4 * i + j]));  /* コマの種類, 状態「1: 存在」, 画像データ, データ入力先 */
     }
   }
 
-  
-  
+  srand((int)time(NULL));
+  RandPieceData(g_pieceData);
+  InitDistance(g_distance);
+
+  intend = START;
+
   StartTimer();	/* 時間計測の開始 */
 }
 
@@ -97,11 +102,26 @@ void init(void) {
 
 /* 表示処理のためのコールバック関数 */
 void display(void) {
+  int i = 0;
+  
   /* ウィンドウを消去 … glClearColor で指定した色で塗りつぶし */
   glClear(GL_COLOR_BUFFER_BIT);
-  
-  if (IsImageDataAllocated(&g_startImage)) {
-    DrawImageData(&g_startImage, 0, 0);
+
+  switch (intend) {
+  case START:
+    if (IsImageDataAllocated(&g_startImage)) {
+      DrawImageData(&g_startImage, 0, 0);
+    }
+    break;
+  case PLAY:
+    for (i = 0; i < (PIECE_SIZE * PIECE_SIZE); i++) {
+      if (IsImageDataAllocated(g_pieceData[i].imagedata) && (g_pieceData[i].state == 1)) {
+	  DrawImageData(g_pieceData[i].imagedata, Conv14toX(i), Conv14toY(i));
+      }
+    }
+    break;
+  default:
+    break;
   }
 
   if (IsImageDataAllocated(&g_Image)) {  /* もし画像が読み込めていたら */
@@ -125,7 +145,7 @@ void idle(void)
 		g_ImagePosY += g_ImageVelocityY;
 
 		/* 画面の外に出ないように座標を調整 */
-		
+
 		if (g_ImagePosX < 0)
 		{
 			g_ImagePosX = 0;
@@ -167,25 +187,25 @@ void keyboard(unsigned char key, int x, int y) {
     }
     else if (key == '\33') exit(0);
     break;
-    
+
   case PLAY:
     if (key == 'n' || key == 'N') intend = NEW_GAME;
     if (key == '\33') intend = START;
     break;
-    
+
   case NEW_GAME:
     break;
-    
+
   case GAME_CLEAR:
     break;
-    
+
   case RANKING:
     break;
-    
+
   default:
     break;
   }
-  
+
   glutPostRedisplay();    /* ウィンドウ描画関数を呼ぶ */
 }
 
@@ -234,6 +254,6 @@ int main(int argc, char *argv[]) {
   GetResources();
   init();
   glutMainLoop();
-  
+
   return 0;
 }
