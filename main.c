@@ -213,9 +213,37 @@ void keyboard(unsigned char key, int x, int y) {
 
 /* マウス入力のためのコールバック関数 */
 void mouse(int button, int state, int x, int _y) {
+  int i = 0, y = g_WindowHeight - _y;
   glutPostRedisplay();    /* ウィンドウ描画関数を呼ぶ */
 
   if (state == GLUT_UP) {
+    switch (intend) {
+    case START:
+      break;
+
+    case PLAY:
+      for (i = 0; i < PIECE_SIZE * PIECE_SIZE; i++) {
+	if (Conv14toX(Conv12to14(i)) < x && x < Conv14toX(Conv12to14(i)) + ONE_PIECE_SIZE) {
+	  if (Conv14toY(Conv12to14(i)) < y && y < Conv14toY(Conv12to14(i)) + ONE_PIECE_SIZE) {
+	    ChangePieceState(g_pieceData[Conv12to14(i)]);
+	  }
+	}
+      }
+      break;
+
+    case NEW_GAME:
+      break;
+
+    case GAME_CLEAR:
+      break;
+
+    case RANKING:
+      break;
+
+    default:
+      break;
+
+    }
     DebugDistance(g_distance);
   }
 }

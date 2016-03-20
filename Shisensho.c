@@ -47,6 +47,12 @@ void InitDistance (int distance[]) {
 
 
 
+void ChangePieceState(PieceData p_Data) {
+  p_Data.state = 1 - p_Data.state;
+}
+
+
+
 /* 配列の添字をピクセル数に変換 */
 int Conv14toX(int i) {
   return 50 + ONE_PIECE_SIZE * (i % PIECE_SIZE);
@@ -54,6 +60,18 @@ int Conv14toX(int i) {
 
 int Conv14toY(int i) {
   return 570 - ONE_PIECE_SIZE * (i / PIECE_SIZE);
+}
+
+
+int Conv12to14(int i) {
+  int j = FRAME_SIZE + 2, cnt = 0;;
+
+  while (j < FRAME_SIZE * (FRAME_SIZE - 1)) {
+    if (i == cnt) return j;
+    if (j % FRAME_SIZE != 0 && j % FRAME_SIZE != FRAME_SIZE - 1) cnt++;
+    j++;
+  }
+  return -1;
 }
 
 
