@@ -5,7 +5,7 @@
 
 #define ONE_PIECE_SIZE 40  /* コマ 1 つのピクセル数 ( 1 辺 ) */
 #define PIECE_SIZE 12      /* パズルの大きさ ( 1 辺 ) */
-#define FRAME_SIZE PIECE_SIZE+2  /* あたり判定に用いるマス目の大きさ ( 1 辺 ) */
+#define FRAME_SIZE (PIECE_SIZE+2)  /* あたり判定に用いるマス目の大きさ ( 1 辺 ) */
 #define ALPHABET 26
 #define ASCII 97
 
@@ -47,5 +47,7 @@ void InitDistance(int distance[]);
 
 int Conv14toX(int i);
 int Conv14toY(int i);
+
+void DebugDistance(int distance[]);
 
 #endif

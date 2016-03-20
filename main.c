@@ -214,6 +214,10 @@ void keyboard(unsigned char key, int x, int y) {
 /* マウス入力のためのコールバック関数 */
 void mouse(int button, int state, int x, int _y) {
   glutPostRedisplay();    /* ウィンドウ描画関数を呼ぶ */
+
+  if (state == GLUT_UP) {
+    DebugDistance(g_distance);
+  }
 }
 
 

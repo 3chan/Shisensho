@@ -38,7 +38,7 @@ void InitDistance (int distance[]) {
   /* 外周 1 マスを「55: 壁」、内側を「1: 存在」に設定 */
   for (i = 0; i < FRAME_SIZE * FRAME_SIZE; i++) {
     if (FRAME_SIZE < i && i < FRAME_SIZE * (FRAME_SIZE - 1) && i % FRAME_SIZE != FRAME_SIZE - 1 && i % FRAME_SIZE != 0) {
-      distance [i] = 1;
+      distance[i] = 1;
     } else {
       distance[i] = 55;
     }
@@ -54,4 +54,18 @@ int Conv14toX(int i) {
 
 int Conv14toY(int i) {
   return 570 - ONE_PIECE_SIZE * (i / PIECE_SIZE);
+}
+
+
+
+/* [DEBUG] Distanceデータ可視化 */
+void DebugDistance(int distance[]) {
+  int i = 0;
+
+  printf("\n == Distance ==\n");
+  for (i = 0; i < FRAME_SIZE * FRAME_SIZE; i++) {
+    printf(" %2d", distance[i]);
+    if (i % FRAME_SIZE == (FRAME_SIZE - 1)) printf("\n");
+  }
+  printf("\n");
 }
