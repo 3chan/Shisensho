@@ -43,7 +43,7 @@ void GetResources(void);
 void InitPieceData(int type, int state, ImageData *img_Data, PieceData *p_Data);
 void RandPieceData(PieceData *p_Data);
 void InitDistance(int distance[]);
-void ChangePieceState(PieceData p_Data); 
+int ChangePieceState(PieceData p_Data); 
 //void CalcDistance(int distance[]);  <= TODO
 
 int Conv14toX(int i);
@@ -51,5 +51,6 @@ int Conv14toY(int i);
 int Conv12to14(int i);
 
 void DebugDistance(int distance[]);
+void DebugPieceState(PieceData *p_Data);
 
 #endif

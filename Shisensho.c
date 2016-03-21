@@ -47,8 +47,8 @@ void InitDistance (int distance[]) {
 
 
 
-void ChangePieceState(PieceData p_Data) {
-  p_Data.state = 1 - p_Data.state;
+int ChangePieceState(PieceData p_Data) {
+  return 1 - p_Data.state;
 }
 
 
@@ -84,6 +84,19 @@ void DebugDistance(int distance[]) {
   for (i = 0; i < FRAME_SIZE * FRAME_SIZE; i++) {
     printf(" %2d", distance[i]);
     if (i % FRAME_SIZE == (FRAME_SIZE - 1)) printf("\n");
+  }
+  printf("\n");
+}
+
+
+/* [DEBUG] コマの状態可視化 */
+void DebugPieceState(PieceData p_Data[]) {
+  int i = 0;
+
+  printf("\n == PieceState ==\n");
+  for (i = 0; i < PIECE_SIZE * PIECE_SIZE; i++) {
+    printf(" %2d", p_Data[i].state);
+    if (i % PIECE_SIZE == (PIECE_SIZE - 1)) printf("\n");
   }
   printf("\n");
 }

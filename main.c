@@ -225,7 +225,7 @@ void mouse(int button, int state, int x, int _y) {
       for (i = 0; i < PIECE_SIZE * PIECE_SIZE; i++) {
 	if (Conv14toX(Conv12to14(i)) < x && x < Conv14toX(Conv12to14(i)) + ONE_PIECE_SIZE) {
 	  if (Conv14toY(Conv12to14(i)) < y && y < Conv14toY(Conv12to14(i)) + ONE_PIECE_SIZE) {
-	    ChangePieceState(g_pieceData[Conv12to14(i)]);
+	    g_pieceData[i].state = ChangePieceState(g_pieceData[i]);
 	  }
 	}
       }
@@ -245,6 +245,7 @@ void mouse(int button, int state, int x, int _y) {
 
     }
     DebugDistance(g_distance);
+    DebugPieceState(g_pieceData);
   }
 }
 
