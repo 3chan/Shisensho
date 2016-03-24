@@ -46,11 +46,12 @@ void InitDistance (int distance[]) {
 }
 
 
-//int ChangePieceState(PieceData p_Data) {
-//return 1 - p_Data.state;
-//}
 
+int ChangePieceState(PieceData p_Data) {
+  return 1 - p_Data.state;
+}
 
+  
 
 void SaveDistance (int distance[], int pushedPiece) {
   printf("== SaveDistance ==\n");

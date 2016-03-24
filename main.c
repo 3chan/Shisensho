@@ -225,7 +225,7 @@ void mouse(int button, int state, int x, int _y) {
       for (i = 0; i < PIECE_SIZE * PIECE_SIZE; i++) {
 	if (Conv12toX(i) < x && x < Conv12toX(i) + ONE_PIECE_SIZE) {
 	  if (Conv12toY(i) < y && y < Conv12toY(i) + ONE_PIECE_SIZE) {
-	    g_pieceData[i].state = ChangePieceState(g_pieceData[i]);  // ŠÖ”•ª‚¯‚·‚é‚©”Û‚©
+	    g_pieceData[i].state = ChangePieceState(g_pieceData[i]);  // ŠÖ”•ª‚¯‚·‚é‚©”Û‚© (Œ»İ‚Í‚µ‚Ä‚¢‚é)
 	    SaveDistance(g_distance, i);
 	  }
 	}
