@@ -54,11 +54,11 @@ int ChangePieceState(PieceData p_Data) {
 
 
 /* 配列の添字をピクセル数に変換 */
-int Conv14toX(int i) {
+int Conv12toX(int i) {
   return 50 + ONE_PIECE_SIZE * (i % PIECE_SIZE);
 }
 
-int Conv14toY(int i) {
+int Conv12toY(int i) {
   return 570 - ONE_PIECE_SIZE * (i / PIECE_SIZE);
 }
 

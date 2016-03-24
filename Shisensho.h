@@ -46,8 +46,8 @@ void InitDistance(int distance[]);
 int ChangePieceState(PieceData p_Data); 
 //void CalcDistance(int distance[]);  <= TODO
 
-int Conv14toX(int i);
-int Conv14toY(int i);
+int Conv12toX(int i);
+int Conv12toY(int i);
 int Conv12to14(int i);
 
 void DebugDistance(int distance[]);

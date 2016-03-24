@@ -116,7 +116,7 @@ void display(void) {
   case PLAY:
     for (i = 0; i < (PIECE_SIZE * PIECE_SIZE); i++) {
       if (IsImageDataAllocated(g_pieceData[i].imagedata) && (g_pieceData[i].state == 1)) {
-	  DrawImageData(g_pieceData[i].imagedata, Conv14toX(i), Conv14toY(i));
+	  DrawImageData(g_pieceData[i].imagedata, Conv12toX(i), Conv12toY(i));
       }
     }
     break;
@@ -223,10 +223,8 @@ void mouse(int button, int state, int x, int _y) {
 
     case PLAY:
       for (i = 0; i < PIECE_SIZE * PIECE_SIZE; i++) {
-	//if (Conv14toX(Conv12to14(i)) < x && x < Conv14toX(Conv12to14(i)) + ONE_PIECE_SIZE) {
-	//if (Conv14toY(Conv12to14(i)) < y && y < Conv14toY(Conv12to14(i)) + ONE_PIECE_SIZE) {
-	if (Conv14toX(i) < x && x < Conv14toX(i) + ONE_PIECE_SIZE) {
-	  if (Conv14toY(i) < y && y < Conv14toY(i) + ONE_PIECE_SIZE) {
+	if (Conv12toX(i) < x && x < Conv12toX(i) + ONE_PIECE_SIZE) {
+	  if (Conv12toY(i) < y && y < Conv12toY(i) + ONE_PIECE_SIZE) {
 	    g_pieceData[i].state = ChangePieceState(g_pieceData[i]);  // ŠÖ”•ª‚¯‚·‚é‚©”Û‚©
 	  }
 	}
