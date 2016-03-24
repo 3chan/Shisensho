@@ -46,10 +46,19 @@ void InitDistance (int distance[]) {
 }
 
 
+//int ChangePieceState(PieceData p_Data) {
+//return 1 - p_Data.state;
+//}
 
-int ChangePieceState(PieceData p_Data) {
-  return 1 - p_Data.state;
-}
+
+
+void SaveDistance (int distance[], int pushedPiece) {
+  printf("== SaveDistance ==\n");
+  int startPoint = 0;
+
+  startPoint = Conv12to14(pushedPiece);
+  distance[startPoint] = 88;  /* クリックされたコマの distance を「88: 押されている」に設定 */
+} 
 
 
 
@@ -87,6 +96,7 @@ void DebugDistance(int distance[]) {
   }
   printf("\n");
 }
+
 
 
 /* [DEBUG] コマの状態可視化 */

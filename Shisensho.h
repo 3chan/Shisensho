@@ -44,7 +44,7 @@ void InitPieceData(int type, int state, ImageData *img_Data, PieceData *p_Data);
 void RandPieceData(PieceData *p_Data);
 void InitDistance(int distance[]);
 int ChangePieceState(PieceData p_Data); 
-//void CalcDistance(int distance[]);  <= TODO
+void SaveDistance(int distance[], int pushedPiece);
 
 int Conv12toX(int i);
 int Conv12toY(int i);
