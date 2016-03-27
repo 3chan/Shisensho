@@ -74,7 +74,7 @@ int Conv12toY(int i) {
 
 
 int Conv12to14(int i) {
-  int j = FRAME_SIZE + 2, cnt = 0;;
+  int j = FRAME_SIZE + 1, cnt = 0;;
 
   while (j < FRAME_SIZE * (FRAME_SIZE - 1)) {
     if (i == cnt) return j;
