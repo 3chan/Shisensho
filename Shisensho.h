@@ -1,4 +1,4 @@
-#ifndef __SHISENSHO_H__
+c#ifndef __SHISENSHO_H__
 #define __SHISENSHO_H__
 
 #include "ImageData.h"
