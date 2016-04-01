@@ -53,13 +53,51 @@ int ChangePieceState(PieceData p_Data) {
 
   
 
-void SaveDistance (int distance[], int pushedPiece) {
+void SaveDistance (int distance[], int _pushedPiece) {
   printf("== SaveDistance ==\n");
-  int startPoint = 0;
+  int pushedPiece = Conv12to14(_pushedPiece);
+  
+  distance[pushedPiece] = 88;  /* クリックされたコマの distance を「88: 押されている」に設定 */
+  CheckDistance(distance, pushedPiece, 11);
+}
 
-  startPoint = Conv12to14(pushedPiece);
-  distance[startPoint] = 88;  /* クリックされたコマの distance を「88: 押されている」に設定 */
-} 
+
+
+void CheckDistance(int distance[], int startPiece, int checkingDistance) {
+  int i = 0;
+  int nowPiece = 0;
+  int goNextPiece = 0;
+  int nextPiece = 0;
+
+  for (i = 0; i < 4; i++) {  /* 0: 上,  1: 右,  2: 下,  3: 左 */
+    switch (i) {
+    case 0:
+      goNextPiece = FRAME_SIZE;
+      break;
+    case 1:
+      goNextPiece = 1;
+      break;
+    case 2:
+      goNextPiece = -1;
+      break;
+    case 3:
+      goNextPiece = - FRAME_SIZE;
+      break;
+    }
+
+    nowPiece = startPiece;
+    nextPiece = nowPiece + goNextPiece;
+    
+    while (0 <= nextPiece && nextPiece < FRAME_SIZE * FRAME_SIZE) {
+      if (distance[nextPiece] != 55 &&  distance[nextPiece] != 1) {
+	distance[nextPiece] = checkingDistance;
+	nowPiece = nowPiece + goNextPiece;
+	nextPiece = nowPiece + goNextPiece;
+      }
+    }
+  }
+  
+}
 
 
 

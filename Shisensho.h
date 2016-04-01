@@ -16,7 +16,7 @@ extern ImageData g_charImages[ALPHABET];
 extern ImageData g_pieceImages[PIECE_SIZE * PIECE_SIZE / 4];
 
 /* あるコマを基準にした、他のマスに辿り着くために必要な角数を格納 */
-extern int g_distance[FRAME_SIZE * FRAME_SIZE];  /* 55: 壁,  0: 消滅,  1: 存在,  88: 押されている */
+extern int g_distance[FRAME_SIZE * FRAME_SIZE];  /* 55: 壁,  0: 消滅,  1: 存在,  88: 押されている,  11: キョリ1,  22: キョリ2,  33: キョリ3 */
 
 enum Intend {
   START,
@@ -44,7 +44,8 @@ void InitPieceData(int type, int state, ImageData *img_Data, PieceData *p_Data);
 void RandPieceData(PieceData *p_Data);
 void InitDistance(int distance[]);
 int ChangePieceState(PieceData p_Data); 
-void SaveDistance(int distance[], int pushedPiece);
+void SaveDistance(int distance[], int _pushedPiece);
+void CheckDistance(int distance[], int startPiece, int checkingDistance);  /* checkingDistance => キョリ1～3: 11, 22, 33 */
 
 int Conv12toX(int i);
 int Conv12toY(int i);
