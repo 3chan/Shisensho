@@ -53,17 +53,27 @@ int ChangePieceState(PieceData p_Data) {
 
   
 
-void SaveDistance (int distance[], int _pushedPiece) {
+int SaveDistance (int distance[], int _pushedPiece) {
   printf("== SaveDistance ==\n");
   int pushedPiece = Conv12to14(_pushedPiece);
-  
-  distance[pushedPiece] = 88;  /* クリックされたコマの distance を「88: 押されている」に設定 */
-  CheckDistance(distance, pushedPiece, 11);
+
+  if (distance[pushedPiece] == 0) {
+    printf("0: 消滅\n");
+    return 0;
+  } else if (distance[pushedPiece] == 55) {
+    printf("55: 壁\n");
+    return 55;
+  } else {
+    distance[pushedPiece] = 88;  /* クリックされたコマの distance を「88: 押されている」に設定 */
+    CheckDistance(distance, pushedPiece, 11);
+    return 88;
+  }
 }
 
 
 
 void CheckDistance(int distance[], int startPiece, int checkingDistance) {
+  printf("== CheckDistance ==\n");
   int i = 0;
   int nowPiece = 0;
   int goNextPiece = 0;
@@ -72,16 +82,20 @@ void CheckDistance(int distance[], int startPiece, int checkingDistance) {
   for (i = 0; i < 4; i++) {  /* 0: 上,  1: 右,  2: 下,  3: 左 */
     switch (i) {
     case 0:
-      goNextPiece = FRAME_SIZE;
+      printf("0: ↑\n");
+      goNextPiece = -FRAME_SIZE;
       break;
     case 1:
+      printf("1: →\n");
       goNextPiece = 1;
       break;
     case 2:
+      printf("2: ←\n");
       goNextPiece = -1;
       break;
     case 3:
-      goNextPiece = - FRAME_SIZE;
+      printf("3; ↓\n");
+      goNextPiece = FRAME_SIZE;
       break;
     }
 
