@@ -72,6 +72,7 @@ int ChangePieceState(PieceData p_Data, int state) {
 
 int SaveDistance (int distance[], int _pushedPiece) {
   printf("== SaveDistance ==\n");
+  int i = 0;
   int pushedPiece = Conv12to14(_pushedPiece);
 
   if (distance[pushedPiece] == 0) {
@@ -83,6 +84,16 @@ int SaveDistance (int distance[], int _pushedPiece) {
   } else {
     distance[pushedPiece] = 88;  /* クリックされたコマの distance を「88: 押されている」に設定 */
     CheckDistance(distance, pushedPiece, 11);
+    for (i = 0; i < FRAME_SIZE * FRAME_SIZE; i++) {
+      if (distance[i] == 11) {
+	CheckDistance(distance, i, 22);
+      }
+    }
+    for (i = 0; i < FRAME_SIZE * FRAME_SIZE; i++) {
+      if (distance[i] == 22) {
+	CheckDistance(distance, i, 33);
+      }
+    }
     return 88;
   }
 }
@@ -155,30 +166,30 @@ int LoadDistance(int distance[], int _pushedPiece, int _prevPushedPiece) {
   int flag = 0;
 
   if (0 < pushedPiece - FRAME_SIZE) {
-    if (distance[pushedPiece - FRAME_SIZE] == 11 || distance[pushedPiece - FRAME_SIZE] == 88) {
+    if (distance[pushedPiece - FRAME_SIZE] == 55 || distance[pushedPiece - FRAME_SIZE] == 0 || distance[pushedPiece - FRAME_SIZE] == 1) {
       printf("flag++ ↑\n");
       flag++;
     }
   }
 
   if (pushedPiece + FRAME_SIZE < FRAME_SIZE * FRAME_SIZE) {
-    if (distance[pushedPiece + FRAME_SIZE] == 11 || distance[pushedPiece + FRAME_SIZE] == 88) {
+    if (distance[pushedPiece + FRAME_SIZE] == 55 || distance[pushedPiece + FRAME_SIZE] == 0 || distance[pushedPiece + FRAME_SIZE] == 1) {    
       printf("flag++ ↓\n");
       flag++;
     }
   }
 
-  if (distance[pushedPiece - 1] == 11 || distance[pushedPiece - 1] == 88) {
+  if (distance[pushedPiece - 1] == 55 || distance[pushedPiece - 1] == 0 || distance[pushedPiece - 1] == 1) {    
     printf("flag++ ←\n");
     flag++;
   }
 
-  if (distance[pushedPiece + 1] == 11 || distance[pushedPiece + 1] == 88) {
+  if (distance[pushedPiece + 1] == 55 || distance[pushedPiece + 1] == 0 || distance[pushedPiece + 1] == 1) {    
     printf("flag++ →\n");
     flag++;
   }
 
-  if (0 < flag) {
+  if (flag < 4) {
     distance[pushedPiece] = 0;
     distance[prevPushedPiece] = 0;
     return 0;
