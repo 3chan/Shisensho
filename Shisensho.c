@@ -141,25 +141,28 @@ int LoadDistance(int distance[], int _pushedPiece, int _prevPushedPiece) {
   printf("== LoadDistance ==\n");
   int pushedPiece = Conv12to14(_pushedPiece);
   int prevPushedPiece = Conv12to14(_prevPushedPiece);
+  int flag = 0;
 
   if (0 < pushedPiece - FRAME_SIZE) {
     if (distance[pushedPiece - FRAME_SIZE] != 11) {
-      return -1;
+      flag++;
     }
   }
 
   if (pushedPiece + FRAME_SIZE < FRAME_SIZE * FRAME_SIZE) {
     if (distance[pushedPiece + FRAME_SIZE] != 11) {
-	return -1;
+      flag++;
     }
   }
 
   if (distance[pushedPiece - 1] != 11 && distance[pushedPiece + 1] != 11) {
-    return -1;
+    flag++;
   }
 
-  distance[pushedPiece] = 0;
-  distance[prevPushedPiece] = 0;
+  if (flag < 3) {
+    distance[pushedPiece] = 0;
+    distance[prevPushedPiece] = 0;
+  }
   return 0;
 }
 
