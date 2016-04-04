@@ -231,15 +231,21 @@ void mouse(int button, int state, int x, int _y) {
 	if (Conv12toX(i) < x && x < Conv12toX(i) + ONE_PIECE_SIZE) {
 	  if (Conv12toY(i) < y && y < Conv12toY(i) + ONE_PIECE_SIZE) {
 	    g_pieceData[i].state = ChangePieceState(g_pieceData[i], 88);  // 関数分けするか否か (現在はしている)
+
 	    /* 1回目のクリック */
 	    if (g_prevClickedPiece == -1) {
 	      g_prevClickedPiece = i;
-	      if (SaveDistance(g_distance, i) != 88) {  /* 壁や消滅したコマをクリックしていた時 */
-		g_prevClickedPiece = InitPrevClickedPiece();
-		g_pieceData[i].state = ChangePieceState(g_pieceData[i], 1);  //関数分け(ry
+	      if (SaveDistance(g_distance, i) != 88) {  /* 壁や消滅したコマをクリックした時 */
+		g_prevClickedPiece = InitPrevClickedPiece();		
+		if (SaveDistance(g_distance, i) == 0) {  /* 消滅したコマをクリックした時 */
+		  g_pieceData[i].state = ChangePieceState(g_pieceData[i], 0);  // 関数分け(ry
+		  break;
+		}
+		g_pieceData[i].state = ChangePieceState(g_pieceData[i], 1);  // 関数分け(ry
 		break;  // break文でfor文のループを抜けられる
 	      }
 	    }
+
 	    /* 2回目のクリック */
 	    else {
 	      printf("== else ==\n");
