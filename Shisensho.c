@@ -137,6 +137,23 @@ void ResetDistance (int distance[]) {
 
 
 
+int LoadDisatnce(int distance[], int _pushedPiece, int _prevPushedPiece) {
+  printf("== LoadDistance ==\n");
+  int pushedPiece = Conv12to14(_pushedPiece);
+  int prevPushedPiece = Conv12to14(_prevPushedPiece);
+
+  if (distance[pushedPiece] == 11) {
+    distance[pushedPiece] = 0;
+    distance[prevPushedPiece] = 0;
+    return 0;
+  }
+  else {
+    return -1;
+  }
+}
+
+
+
 /* 配列の添字をピクセル数に変換 */
 int Conv12toX(int i) {
   return 50 + ONE_PIECE_SIZE * (i % PIECE_SIZE);

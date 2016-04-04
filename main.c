@@ -243,12 +243,13 @@ void mouse(int button, int state, int x, int _y) {
 	    /* 2‰ñ–Ú‚ÌƒNƒŠƒbƒN */
 	    else {
 	      printf("== else ==\n");
-	      if (i == g_prevClickedPiece) {
-
+	      if (g_pieceData[i].type == g_pieceData[g_prevClickedPiece].type) {
+		LoadDistance(g_distance, i, g_prevClickedPiece);
 	      }
 	      g_pieceData[i].state = ChangePieceState(g_pieceData[i]);  // ŠÖ”•ª‚¯(ry
 	      g_pieceData[g_prevClickedPiece].state = ChangePieceState(g_pieceData[g_prevClickedPiece]);  // ŠÖ”•ª‚¯(ry
 	      g_prevClickedPiece = InitPrevClickedPiece();
+	      ResetDistance(g_distance);
 	    }
 	  }
 	}

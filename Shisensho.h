@@ -51,6 +51,7 @@ int ChangePieceState(PieceData p_Data);
 int SaveDistance(int distance[], int _pushedPiece);
 void CheckDistance(int distance[], int startPiece, int checkingDistance);  /* checkingDistance => キョリ1～3: 11, 22, 33 */
 void ResetDistance(int distance[]);
+int LoadDistance(int distance[], int _pushedPiece, int _prevPushedPiece);
 
 int Conv12toX(int i);
 int Conv12toY(int i);
