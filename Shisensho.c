@@ -53,8 +53,19 @@ void InitDistance (int distance[]) {
 
 
 
-int ChangePieceState(PieceData p_Data) {
-  return 1 - p_Data.state;
+int ChangePieceState(PieceData p_Data, int state) {
+  if (state == 88) {
+    return 88;
+  }
+  else if (state == 0) {
+    return 0;
+  }
+  else if (state == 1) {
+    return 1;
+  }
+  else {
+    return -1;
+  }
 }
 
   
@@ -170,8 +181,11 @@ int LoadDistance(int distance[], int _pushedPiece, int _prevPushedPiece) {
   if (0 < flag) {
     distance[pushedPiece] = 0;
     distance[prevPushedPiece] = 0;
+    return 0;
   }
-  return 0;
+  else {
+    return -1;
+  }
 }
 
 

@@ -47,7 +47,7 @@ void InitPieceData(int type, int state, ImageData *img_Data, PieceData *p_Data);
 void RandPieceData(PieceData *p_Data);
 int InitPrevClickedPiece(void);
 void InitDistance(int distance[]);
-int ChangePieceState(PieceData p_Data); 
+int ChangePieceState(PieceData p_Data, int state); 
 int SaveDistance(int distance[], int _pushedPiece);
 void CheckDistance(int distance[], int startPiece, int checkingDistance);  /* checkingDistance => キョリ1～3: 11, 22, 33 */
 void ResetDistance(int distance[]);
