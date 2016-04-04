@@ -142,14 +142,25 @@ int LoadDistance(int distance[], int _pushedPiece, int _prevPushedPiece) {
   int pushedPiece = Conv12to14(_pushedPiece);
   int prevPushedPiece = Conv12to14(_prevPushedPiece);
 
-  if (distance[pushedPiece] == 11) {
-    distance[pushedPiece] = 0;
-    distance[prevPushedPiece] = 0;
-    return 0;
+  if (0 < pushedPiece - FRAME_SIZE) {
+    if (distance[pushedPiece - FRAME_SIZE] != 11) {
+      return -1;
+    }
   }
-  else {
+
+  if (pushedPiece + FRAME_SIZE < FRAME_SIZE * FRAME_SIZE) {
+    if (distance[pushedPiece + FRAME_SIZE] != 11) {
+	return -1;
+    }
+  }
+
+  if (distance[pushedPiece - 1] != 11 && distance[pushedPiece + 1] != 11) {
     return -1;
   }
+
+  distance[pushedPiece] = 0;
+  distance[prevPushedPiece] = 0;
+  return 0;
 }
 
 
