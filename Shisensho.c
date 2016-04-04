@@ -144,25 +144,30 @@ int LoadDistance(int distance[], int _pushedPiece, int _prevPushedPiece) {
   int flag = 0;
 
   if (0 < pushedPiece - FRAME_SIZE) {
-    if (distance[pushedPiece - FRAME_SIZE] != 11) {
+    if (distance[pushedPiece - FRAME_SIZE] == 11 || distance[pushedPiece - FRAME_SIZE] == 88) {
       printf("flag++ ↑\n");
       flag++;
     }
   }
 
   if (pushedPiece + FRAME_SIZE < FRAME_SIZE * FRAME_SIZE) {
-    if (distance[pushedPiece + FRAME_SIZE] != 11) {
+    if (distance[pushedPiece + FRAME_SIZE] == 11 || distance[pushedPiece + FRAME_SIZE] == 88) {
       printf("flag++ ↓\n");
       flag++;
     }
   }
 
-  if (distance[pushedPiece - 1] != 11 && distance[pushedPiece + 1] != 11) {
-    printf("flag++ ←→\n");
+  if (distance[pushedPiece - 1] == 11 || distance[pushedPiece - 1] == 88) {
+    printf("flag++ ←\n");
     flag++;
   }
 
-  if (flag < 3) {
+  if (distance[pushedPiece + 1] == 11 || distance[pushedPiece + 1] == 88) {
+    printf("flag++ →\n");
+    flag++;
+  }
+
+  if (0 < flag) {
     distance[pushedPiece] = 0;
     distance[prevPushedPiece] = 0;
   }
