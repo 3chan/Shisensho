@@ -35,6 +35,7 @@ ImageData g_pieceImages[PIECE_SIZE * PIECE_SIZE /4];
 PieceData g_pieceData[PIECE_SIZE * PIECE_SIZE];
 
 int g_distance[FRAME_SIZE * FRAME_SIZE];
+int g_prevClickedPiece;
 
 enum Intend intend;
 
@@ -89,13 +90,17 @@ void init(void) {
     }
   }
 
-  srand((int)time(NULL));
-  RandPieceData(g_pieceData);
+  RandPieceData(g_pieceData);  /* 作ったデータをランダムに並び替え */
+  
+  g_prevClickedPiece = InitPrevClickedPiece();  /* ??? NEW_GAME するときに init() は呼び出すのか、それによりこの行を書く場所が変わる ??? */
+  
   InitDistance(g_distance);
 
   intend = START;
 
-  StartTimer();	/* 時間計測の開始 */
+  /* 時間計測の開始 */
+  srand((int)time(NULL));
+  StartTimer();
 }
 
 
@@ -226,7 +231,23 @@ void mouse(int button, int state, int x, int _y) {
 	if (Conv12toX(i) < x && x < Conv12toX(i) + ONE_PIECE_SIZE) {
 	  if (Conv12toY(i) < y && y < Conv12toY(i) + ONE_PIECE_SIZE) {
 	    g_pieceData[i].state = ChangePieceState(g_pieceData[i]);  // 関数分けするか否か (現在はしている)
-	    SaveDistance(g_distance, i);
+	    /* 1回目のクリック */
+	    if (g_prevClickedPiece == -1) {
+	      g_prevClickedPiece = i;
+	      if (SaveDistance(g_distance, i) != 88) {  /* 壁や消滅したコマをクリックしていた時 */
+		g_prevClickedPiece = InitPrevClickedPiece();
+		g_pieceData[i].state = ChangePieceState(g_pieceData[i]);  //関数分け(ry
+		break;  // break文でfor文のループを抜けられる
+	      }
+	    }
+	    /* 2回目のクリック */
+	    else {
+	      printf("== else ==\n");
+	      if (i == g_prevClickedPiece) {
+		g_pieceData[i].state = ChangePieceState(g_pieceData[i]);  // 関数分け(ry
+	      }
+	      g_prevClickedPiece = InitPrevClickedPiece();
+	    }
 	  }
 	}
       }

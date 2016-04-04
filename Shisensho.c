@@ -31,6 +31,12 @@ void RandPieceData(PieceData *p_Data) {
 
 
 
+int InitPrevClickedPiece(void) {
+  return -1;
+}
+
+
+
 void InitDistance (int distance[]) {
   printf("== InitDistance ==\n");
   int i = 0;
@@ -102,6 +108,7 @@ void CheckDistance(int distance[], int startPiece, int checkingDistance) {
     nowPiece = startPiece;
     nextPiece = nowPiece + goNextPiece;
     
+    /* 壁か「1: 存在」のコマに当たるまで for文で指定された方向に進み distance を引数の checkingDistance に置き換える */
     while (0 <= nextPiece && nextPiece < FRAME_SIZE * FRAME_SIZE && distance[nextPiece] != 55 &&  distance[nextPiece] != 1) {
       printf("== Coming ==\n");
       distance[nextPiece] = checkingDistance;
@@ -110,6 +117,22 @@ void CheckDistance(int distance[], int startPiece, int checkingDistance) {
     }
   }
   
+}
+
+
+
+void ResetDistance (int distance[]) {
+  printf("== ResetDistance ==\n");
+  int i = 0;
+
+  for (i = 0; i < FRAME_SIZE * FRAME_SIZE; i++) {  /* distance[] の要素数だけ回す。今は FRAME_SIZE * FRAME_SIZE */
+    if (distance[i] == 11 || distance[i] == 22 || distance[i] == 33) {
+      distance[i] = 0;  /* 角数探索に使った部分を「0: 消滅」にリセット */
+    }
+    else if (distance[i] == 88) {
+      distance[i] = 1;  /* もし「88: 押されている」のままのマスがあれば「1: 存在」にリセット */
+    }
+  }
 }
 
 
