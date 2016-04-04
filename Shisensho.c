@@ -137,7 +137,7 @@ void ResetDistance (int distance[]) {
 
 
 
-int LoadDisatnce(int distance[], int _pushedPiece, int _prevPushedPiece) {
+int LoadDistance(int distance[], int _pushedPiece, int _prevPushedPiece) {
   printf("== LoadDistance ==\n");
   int pushedPiece = Conv12to14(_pushedPiece);
   int prevPushedPiece = Conv12to14(_prevPushedPiece);
