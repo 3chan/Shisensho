@@ -244,8 +244,10 @@ void mouse(int button, int state, int x, int _y) {
 	    else {
 	      printf("== else ==\n");
 	      if (i == g_prevClickedPiece) {
-		g_pieceData[i].state = ChangePieceState(g_pieceData[i]);  // ŠÖ”•ª‚¯(ry
+
 	      }
+	      g_pieceData[i].state = ChangePieceState(g_pieceData[i]);  // ŠÖ”•ª‚¯(ry
+	      g_pieceData[g_prevClickedPiece].state = ChangePieceState(g_pieceData[g_prevClickedPiece]);  // ŠÖ”•ª‚¯(ry
 	      g_prevClickedPiece = InitPrevClickedPiece();
 	    }
 	  }
