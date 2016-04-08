@@ -133,7 +133,7 @@ void CheckDistance(int distance[], int startPiece, int checkingDistance) {
     /* 壁か「1: 存在」のコマに当たるまで for文で指定された方向に進み distance を引数の checkingDistance に置き換える */
     while (0 <= nextPiece && nextPiece < FRAME_SIZE * FRAME_SIZE &&  distance[nextPiece] != 1) {
       printf("== Coming ==\n");
-      if (checkingDistance < distance[nextPiece]) {
+      if (checkingDistance < distance[nextPiece] && distance[nextPiece] != 88) {
 	distance[nextPiece] = checkingDistance;
       }
       nowPiece = nowPiece + goNextPiece;
@@ -150,7 +150,10 @@ void ResetDistance (int distance[]) {
   int i = 0;
 
   for (i = 0; i < FRAME_SIZE * FRAME_SIZE; i++) {  /* distance[] の要素数だけ回す。今は FRAME_SIZE * FRAME_SIZE */
-    if (distance[i] == 11 || distance[i] == 22 || distance[i] == 33) {
+    if (i<FRAME_SIZE || i % FRAME_SIZE == 0 || i % FRAME_SIZE == FRAME_SIZE - 1 || FRAME_SIZE * (FRAME_SIZE - 1) < i) {
+      distance[i] = 55;  /* 壁を復旧 */
+    }
+    else if (distance[i] == 11 || distance[i] == 22 || distance[i] == 33) {
       distance[i] = 0;  /* 角数探索に使った部分を「0: 消滅」にリセット */
     }
     else if (distance[i] == 88) {
@@ -167,6 +170,10 @@ int LoadDistance(int distance[], int _pushedPiece, int _prevPushedPiece) {
   int prevPushedPiece = Conv12to14(_prevPushedPiece);
   int flag = 0;
 
+  if (pushedPiece == prevPushedPiece) {
+    return -1;
+  }
+  
   if (0 < pushedPiece - FRAME_SIZE) {
     if (distance[pushedPiece - FRAME_SIZE] == 55 || distance[pushedPiece - FRAME_SIZE] == 0 || distance[pushedPiece - FRAME_SIZE] == 1) {
       printf("flag++ ↑\n");
@@ -175,13 +182,13 @@ int LoadDistance(int distance[], int _pushedPiece, int _prevPushedPiece) {
   }
 
   if (pushedPiece + FRAME_SIZE < FRAME_SIZE * FRAME_SIZE) {
-    if (distance[pushedPiece + FRAME_SIZE] == 55 || distance[pushedPiece + FRAME_SIZE] == 0 || distance[pushedPiece + FRAME_SIZE] == 1) {    
+    if (distance[pushedPiece + FRAME_SIZE] == 55|| distance[pushedPiece + FRAME_SIZE] == 0 || distance[pushedPiece + FRAME_SIZE] == 1) {    
       printf("flag++ ↓\n");
       flag++;
     }
   }
 
-  if (distance[pushedPiece - 1] == 55 || distance[pushedPiece - 1] == 0 || distance[pushedPiece - 1] == 1) {    
+  if (distance[pushedPiece - 1] == 55|| distance[pushedPiece - 1] == 0 || distance[pushedPiece - 1] == 1) {    
     printf("flag++ ←\n");
     flag++;
   }
