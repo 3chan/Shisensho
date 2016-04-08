@@ -248,13 +248,20 @@ void mouse(int button, int state, int x, int _y) {
 
 	    /* 2回目のクリック */
 	    else {
-	      printf("== else ==\n");
+	      printf("== 2nd click ==\n");
+	      /* 一致 */
 	      if (g_pieceData[i].type == g_pieceData[g_prevClickedPiece].type && LoadDistance(g_distance, i, g_prevClickedPiece) == 0) {
 		g_pieceData[i].state = ChangePieceState(g_pieceData[i], 0);  // 関数分け(ry
 		g_pieceData[g_prevClickedPiece].state = ChangePieceState(g_pieceData[g_prevClickedPiece], 0);  // 関数分け(ry
 	      }
+	      /* 不一致 */
 	      else {
-		g_pieceData[i].state = ChangePieceState(g_pieceData[i], 1);  // 関数分け(ry
+		if (g_distance[Conv12to14(i)] != 0) {  // ここでg_distance, Conv12to14 使うのは仮
+		  g_pieceData[i].state = ChangePieceState(g_pieceData[i], 1);  // 関数分け(ry
+		}
+		else {
+		  g_pieceData[i].state = ChangePieceState(g_pieceData[i], 0);
+		}
 		g_pieceData[g_prevClickedPiece].state = ChangePieceState(g_pieceData[g_prevClickedPiece], 1);  // 関数分け(ry
 	      }
 	      g_prevClickedPiece = InitPrevClickedPiece();
