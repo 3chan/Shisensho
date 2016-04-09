@@ -122,7 +122,7 @@ void CheckDistance(int distance[], int startPiece, int checkingDistance) {
       goNextPiece = -1;
       break;
     case 3:
-      printf("3; ↓\n");
+      printf("3: ↓\n");
       goNextPiece = FRAME_SIZE;
       break;
     }
@@ -133,8 +133,10 @@ void CheckDistance(int distance[], int startPiece, int checkingDistance) {
     /* 壁か「1: 存在」のコマに当たるまで for文で指定された方向に進み distance を引数の checkingDistance に置き換える */
     while (0 <= nextPiece && nextPiece < FRAME_SIZE * FRAME_SIZE &&  distance[nextPiece] != 1) {
       printf("== Coming ==\n");
-      if (checkingDistance < distance[nextPiece] && distance[nextPiece] != 88) {
-	distance[nextPiece] = checkingDistance;
+      if (distance[nextPiece] == 0 || checkingDistance < distance[nextPiece]) {
+	if (distance[nextPiece] != 88) {
+	  distance[nextPiece] = checkingDistance;
+	}
       }
       nowPiece = nowPiece + goNextPiece;
       nextPiece = nowPiece + goNextPiece;
