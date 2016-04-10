@@ -129,10 +129,10 @@ void display(void) {
     break;
   }
 
-  if (IsImageDataAllocated(&g_Image)) {  /* もし画像が読み込めていたら */
+  //if (IsImageDataAllocated(&g_Image)) {  /* もし画像が読み込めていたら */
     /* 座標 (g_ImagePosX, g_ImagePosY) の位置に、画像を表示 */
-    DrawImageData(&g_Image, g_ImagePosX, g_ImagePosY);
-  }
+  //  DrawImageData(&g_Image, g_ImagePosX, g_ImagePosY);
+  //}
   
   glutSwapBuffers();
 }
