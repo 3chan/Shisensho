@@ -70,7 +70,7 @@ int ChangePieceState(PieceData p_Data, int state) {
 
   
 
-int SaveDistance (int distance[], int _pushedPiece) {
+int SaveDistance (int distance[], int _pushedPiece, PieceData *p_Data) {
   printf("== SaveDistance ==\n");
   int i = 0;
   int pushedPiece = Conv12to14(_pushedPiece);
@@ -100,7 +100,7 @@ int SaveDistance (int distance[], int _pushedPiece) {
 
 
 
-void CheckDistance(int distance[], int startPiece, int checkingDistance) {
+void CheckDistance(int distance[], int startPiece, int checkingDistance, PieceData *p_Data) {
   printf("== CheckDistance ==\n");
   int i = 0;
   int nowPiece = 0;
@@ -134,7 +134,7 @@ void CheckDistance(int distance[], int startPiece, int checkingDistance) {
     while (0 <= nextPiece && nextPiece < FRAME_SIZE * FRAME_SIZE &&  distance[nextPiece] != 1) {
       printf("== Coming ==\n");
       if (distance[nextPiece] == 0 || checkingDistance < distance[nextPiece]) {
-	if (distance[nextPiece] != 88) {
+	if (distance[nextPiece] != 88 && p_Data[nextPiece]) {  // TODO: PieceData は PIECE_SIZE * PIECE_SIZE
 	  distance[nextPiece] = checkingDistance;
 	}
       }

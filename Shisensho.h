@@ -48,8 +48,8 @@ void RandPieceData(PieceData *p_Data);
 int InitPrevClickedPiece(void);
 void InitDistance(int distance[]);
 int ChangePieceState(PieceData p_Data, int state); 
-int SaveDistance(int distance[], int _pushedPiece);
-void CheckDistance(int distance[], int startPiece, int checkingDistance);  /* checkingDistance => キョリ1～3: 11, 22, 33 */
+int SaveDistance(int distance[], int _pushedPiece, PieceData *p_Data);  // TODO piecedata.state が欲しいのでここにpiecedata持ってくる
+void CheckDistance(int distance[], int startPiece, int checkingDistance, PieceData *p_Data);  /* checkingDistance => キョリ1～3: 11, 22, 33 */
 void ResetDistance(int distance[]);
 int LoadDistance(int distance[], int _pushedPiece, int _prevPushedPiece);
 
