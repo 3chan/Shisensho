@@ -56,6 +56,7 @@ int LoadDistance(int distance[], int _pushedPiece, int _prevPushedPiece);
 int Conv12toX(int i);
 int Conv12toY(int i);
 int Conv12to14(int i);
+int Conv14to12(int i);
 
 void DebugDistance(int distance[]);
 void DebugPieceState(PieceData *p_Data);

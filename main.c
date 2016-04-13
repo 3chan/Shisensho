@@ -235,9 +235,9 @@ void mouse(int button, int state, int x, int _y) {
 	    /* 1回目のクリック */
 	    if (g_prevClickedPiece == -1) {
 	      g_prevClickedPiece = i;
-	      if (SaveDistance(g_distance, i) != 88) {  /* 壁や消滅したコマをクリックした時 */
+	      if (SaveDistance(g_distance, i, g_pieceData) != 88) {  /* 壁や消滅したコマをクリックした時 */
 		g_prevClickedPiece = InitPrevClickedPiece();		
-		if (SaveDistance(g_distance, i) == 0) {  /* 消滅したコマをクリックした時 */
+		if (SaveDistance(g_distance, i, g_pieceData) == 0) {  /* 消滅したコマをクリックした時 */
 		  g_pieceData[i].state = ChangePieceState(g_pieceData[i], 0);  // 関数分け(ry
 		  break;
 		}

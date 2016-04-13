@@ -83,15 +83,15 @@ int SaveDistance (int distance[], int _pushedPiece, PieceData *p_Data) {
     return 55;
   } else {
     distance[pushedPiece] = 88;  /* クリックされたコマの distance を「88: 押されている」に設定 */
-    CheckDistance(distance, pushedPiece, 11);
+    CheckDistance(distance, pushedPiece, 11, p_Data);
     for (i = 0; i < FRAME_SIZE * FRAME_SIZE; i++) {
       if (distance[i] == 11) {
-	CheckDistance(distance, i, 22);
+	CheckDistance(distance, i, 22, p_Data);
       }
     }
     for (i = 0; i < FRAME_SIZE * FRAME_SIZE; i++) {
       if (distance[i] == 22) {
-	CheckDistance(distance, i, 33);
+	CheckDistance(distance, i, 33, p_Data);
       }
     }
     return 88;
@@ -134,8 +134,10 @@ void CheckDistance(int distance[], int startPiece, int checkingDistance, PieceDa
     while (0 <= nextPiece && nextPiece < FRAME_SIZE * FRAME_SIZE &&  distance[nextPiece] != 1) {
       printf("== Coming ==\n");
       if (distance[nextPiece] == 0 || checkingDistance < distance[nextPiece]) {
-	if (distance[nextPiece] != 88 && p_Data[nextPiece]) {  // TODO: PieceData は PIECE_SIZE * PIECE_SIZE
-	  distance[nextPiece] = checkingDistance;
+	if (distance[nextPiece] != 88) {
+	  if (Conv14to12(nextPiece) != -1 && p_Data.state[Conv14to12(nextPiece)] != 0) {  // PieceData は PIECE_SIZE * PIECE_SIZE
+	    distance[nextPiece] = checkingDistance;
+	  }
 	}
       }
       nowPiece = nowPiece + goNextPiece;
@@ -229,6 +231,28 @@ int Conv12to14(int i) {
     if (i == cnt) return j;
     if (j % FRAME_SIZE != 0 && j % FRAME_SIZE != FRAME_SIZE - 1) cnt++;
     j++;
+  }
+  return -1;
+}
+
+
+int Conv14to12(int i) {
+  int j = 0, cnt = 0;
+
+  while (cnt < PIECE_SIZE * PIECE_SIZE) {
+    if (i == 0) {
+      return -1;
+    }
+    else if (i == cnt) {
+      return i;
+    }
+    else if (i % FRAME_SIZE == 0 || i % FRAME_SIZE == FRAME_SIZE - 1) {
+      j++;
+    }
+    else {
+      cnt++;
+      j++;
+    }
   }
   return -1;
 }
